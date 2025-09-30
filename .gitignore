@@ -6,16 +6,27 @@ __pycache__/
 # Virtual environment
 venv/
 
-# SQLite database (optional, if you want to keep local DB private)
+# SQLite / database files
 *.db
+*.sqlite3
 
-# VS Code settings (optional)
+# VS Code settings
 .vscode/
+
+# IDE/editor files
+*.idea/
 
 # Logs
 *.log
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # Python packaging
 *.egg-info/
 dist/
 build/
+
+# Environment variables
+.env
