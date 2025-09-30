@@ -1,0 +1,71 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    padding: 15px 20px;       /* slightly more padding */
+    border-radius: 10px;
+    width: 400px;             /* wider for two-column inputs */
+    max-width: 90%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+  
+  .modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;           /* allow wrapping on small screens */
+    gap: 10px;                 /* space between inputs */
+    margin-bottom: 10px;
+  }
+  
+  .form-row input {
+    flex: 1 1 45%;             /* each input takes ~45% of row */
+    min-width: 120px;          /* prevent overlapping */
+    padding: 6px 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 0.9rem;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .modal-buttons button {
+    flex: 1;
+    padding: 6px 0;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin: 0 3px;
+  }
+  
+  .modal-buttons button:first-child {
+    background-color: #28a745; /* Update button */
+    color: white;
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: #dc3545; /* Cancel button */
+    color: white;
+  }
+  

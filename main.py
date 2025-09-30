@@ -1,17 +1,20 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import models, schemas
-from database import engine, SessionLocal
+from database import engine, get_db
 
+# --------------------------
 # Create FastAPI app
-app = FastAPI()
+# --------------------------
+app = FastAPI(title="Student Management System")
 
 # Allow requests from frontend
+origins = ["http://localhost:3000"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # For testing, allow all origins
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,15 +23,9 @@ app.add_middleware(
 # Create database tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Student Management System")
-
-# Dependency: get DB session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# --------------------------
+# CRUD Endpoints
+# --------------------------
 
 # Create a student
 @app.post("/students/", response_model=schemas.Student)
@@ -61,7 +58,7 @@ def update_student(student_id: int, updated_student: schemas.StudentCreate, db: 
     student = db.query(models.Student).filter(models.Student.id == student_id).first()
     if not student:
         raise HTTPException(status_code=404, detail="Student not found")
-    # check unique roll number
+    # Check unique roll number
     if student.roll_number != updated_student.roll_number:
         if db.query(models.Student).filter(models.Student.roll_number == updated_student.roll_number).first():
             raise HTTPException(status_code=400, detail="Roll number already exists")
@@ -85,16 +82,10 @@ def delete_student(student_id: int, db: Session = Depends(get_db)):
 @app.get("/students/course/{course_name}", response_model=list[schemas.Student])
 def get_students_by_course(course_name: str, db: Session = Depends(get_db)):
     students = db.query(models.Student).filter(models.Student.course == course_name).all()
-    if not students:
-        raise HTTPException(status_code=404, detail="No students found in this course")
-    return students
+    return students  # returns empty list if none found
 
-# Find students with marks above a value
+# Find students with marks above a certain value
 @app.get("/students/marks_above/{min_marks}", response_model=list[schemas.Student])
 def get_students_by_marks(min_marks: float, db: Session = Depends(get_db)):
     students = db.query(models.Student).filter(models.Student.marks >= min_marks).all()
-    if not students:
-        raise HTTPException(status_code=404, detail=f"No students found with marks >= {min_marks}")
-    return students
-
-
+    return students  # returns empty list if none found
