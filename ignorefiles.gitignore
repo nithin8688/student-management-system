@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+
+# SQLite database (optional, if you want to keep local DB private)
+*.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Logs
+*.log
+
+# Python packaging
+*.egg-info/
+dist/
+build/
